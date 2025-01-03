@@ -9,10 +9,14 @@ import com.jeictechnology.foro.dto.topico.RegistrarTopico;
 import com.jeictechnology.foro.repository.ICursoRepository;
 import com.jeictechnology.foro.repository.ITopicoRepository;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.jeictechnology.foro.repository.IUsuarioRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -58,10 +62,26 @@ public class TopicoService {
                 topicoGuardado.getRespuestas().stream()
                         .map(r -> new DatosRespuesta(
                                 r.getMensaje(),
-                                r.getFechaRespuesta(),
+                                r.getFecha(),
                                 r.getAutor().getNombre()))
                         .collect(Collectors.toList())
 
         );
+    }
+
+    public Page<Topico> obtenerTopicosOrdenadosFecha(Pageable pageable){
+        return iTopicoRepository.findByStatusOrderByFechaAsc(1, pageable);
+    }
+
+    public Page<Topico> obtenerTopicoPorAnio(Integer anio, Pageable pageable){
+        return iTopicoRepository.findByAnio(anio, pageable);
+    }
+
+    public Page<Topico> obtenerTopicoPorNombreCurso(String cursoNombre, Pageable pageable){
+        return iTopicoRepository.findByCurso(cursoNombre, pageable);
+    }
+
+    public List<Topico> obtenerTopicoPorAnioOCurso(Integer anio, String curso, Pageable pageable){
+        return  iTopicoRepository.findByAnioAndCurso(anio, curso, pageable);
     }
 }

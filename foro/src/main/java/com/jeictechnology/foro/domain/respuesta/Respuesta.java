@@ -22,11 +22,11 @@ public class Respuesta {
 
     private String mensaje;
     @ManyToOne
-    @JoinColumn(name = "topico_id")
+    @JoinColumn(name = "topico")
     private Topico topico;
-    private LocalDateTime fechaRespuesta;
+    private LocalDateTime fecha;
     @ManyToOne
-    @JoinColumn(name = "autor_id")
+    @JoinColumn(name = "autor")
     private Usuario autor;
     private Boolean solucion;
 
@@ -58,12 +58,12 @@ public class Respuesta {
         return topico;
     }
 
-    public LocalDateTime getFechaRespuesta() {
-        return fechaRespuesta;
+    public LocalDateTime getFecha() {
+        return fecha;
     }
 
-    public void setFechaRespuesta(LocalDateTime fechaRespuesta) {
-        this.fechaRespuesta = fechaRespuesta;
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
     }
 
     public Usuario getAutor() {
